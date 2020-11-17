@@ -1,0 +1,19 @@
+.hero-banner {
+	@include size(100%, 100vh);
+	@include center-content;
+	position: relative;
+	overflow: hidden;
+	&__image {
+		@include size(100%, 100%);
+		@include background-image-cover;
+		@include old-style(0.2);
+		position: absolute;
+		top: 0;
+		left: 0;
+		z-index: -1;
+		will-change: transform;
+	}
+	&__content {
+
+	}
+}

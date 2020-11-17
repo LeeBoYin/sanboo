@@ -1,0 +1,8 @@
+.tag {
+	display: inline-block;
+	padding: map_get($spacers, 1) map_get($spacers, 2);
+	margin-right: map_get($spacers, 2);
+	margin-top: map_get($spacers, 2);
+	color: $primary-dark;
+	background-color: $gray-200;
+}

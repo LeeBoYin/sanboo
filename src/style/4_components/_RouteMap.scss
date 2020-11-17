@@ -1,0 +1,14 @@
+.route-map {
+	@include size(100%, 80vh);
+	background-color: $gray-300;
+
+	.leaflet-popup-content-wrapper {
+		border-radius: 0;
+		padding: 0;
+		box-shadow: 0 4px 24px rgba(0, 0, 0, 0.16);
+	}
+
+	.leaflet-popup-content {
+		margin: 0;
+	}
+}

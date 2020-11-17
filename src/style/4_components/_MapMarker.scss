@@ -1,0 +1,21 @@
+.map-marker {
+	@extend %location-index;
+	font-size: $font-size-base;
+	color: #FFF;
+	&:before {
+		border: 1px solid #E4E4C9;
+		background-color: $primary-dark;
+	}
+	&:after {
+		content: '';
+		position: absolute;
+		top: calc(100% - 1px);
+		left: 6px;
+		display: block;
+		border: 6px solid $primary-dark;
+		border-left-color: transparent;
+		border-right-color: transparent;
+		border-bottom-color: transparent;
+		transform: skewX(-20deg);
+	}
+}

@@ -1,0 +1,49 @@
+@mixin size($width, $height: $width) {
+	width: $width;
+	height: $height;
+}
+
+@mixin hide-scrollbar {
+	-ms-overflow-style: none;  /* IE and Edge */
+	scrollbar-width: none;  /* Firefox */
+	&::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+@mixin background-image-cover {
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+}
+
+@mixin scroll-snap-horizontal {
+	display: flex;
+	flex-wrap: nowrap;
+	overflow-x: auto;
+	scroll-snap-type: x mandatory;
+	> * {
+		@include size(100%, 100%);
+		flex: 0 0 auto;
+		scroll-snap-align: center;
+	}
+}
+
+@mixin center-content {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+@mixin old-style($level: 0.2) {
+	filter: sepia($level) contrast(1- ($level / 2));
+}
+
+@mixin absolute-full-size {
+	position: absolute;
+	top: 0;
+	left: 0;
+	@include size(100%, 100%);
+}
+
+@import "~bootstrap/scss/mixins";
