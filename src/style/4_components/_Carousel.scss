@@ -1,7 +1,7 @@
 .carousel {
 	position: relative;
 	&__list {
-		@include size(100%, 75vh);
+		@include size(100%);
 		@include hide-scrollbar;
 		@include scroll-snap-horizontal;
 		background-color: $gray-300;
@@ -12,13 +12,14 @@
 	}
 	&__indicator {
 		position: absolute;
-		bottom: 90px;
+		bottom: 10px;
 		left: 0;
 		width: 100%;
 		display: flex;
 		justify-content: center;
 		flex-wrap: nowrap;
 		margin: 10px 0;
+		padding: 0 15px;
 	}
 	&__indicator-dot {
 		border-radius: 2px;

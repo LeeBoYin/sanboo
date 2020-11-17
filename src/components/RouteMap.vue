@@ -87,7 +87,6 @@ export default {
 		onMapReady() {
 			this.mapObject = this.$refs.map.mapObject;
 			window.mapObject = this.mapObject;
-			console.log('onMapReady', this.$refs.map.mapObject);
 		},
 		onMapTouch(e) {
 			if(e.touches.length > 1) {

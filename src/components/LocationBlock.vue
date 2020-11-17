@@ -1,6 +1,7 @@
 <template>
 	<div class="location-block">
 		<Carousel
+			class="location-block__carousel"
 			:images="locationData.images"
 		/>
 		<div class="container">
@@ -18,7 +19,10 @@
 					>{{ tag }}</Tag>
 				</div>
 				<div class="mt-4 text-right">
-					<button class="btn btn-primary-dark">
+					<button
+						class="btn btn-primary-dark"
+						@click="$emit('click:more')"
+					>
 						<span>了解更多</span>
 						<img
 							class="location-block__cta-arrow"

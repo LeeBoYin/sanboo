@@ -1,0 +1,5 @@
+.location-detail {
+	&__carousel {
+		@include size(100%, 40vh);
+	}
+}

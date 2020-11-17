@@ -1,5 +1,11 @@
 .location-block {
 	border-top: 4px solid $secondary;
+	&__carousel {
+		@include size(100%, 75vh);
+		.carousel__indicator {
+			bottom: 90px;
+		}
+	}
 	&__content {
 		margin: -80px 0 80px;
 		position: relative;

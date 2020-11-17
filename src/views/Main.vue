@@ -35,7 +35,20 @@
 			:key="index"
 			:index="index + 1"
 			:location-data="locationData"
+			@click:more="onClickMore(index)"
 		/>
+		<hr>
+<!--		<Modal-->
+<!--			:is-open="isOpenModal"-->
+<!--			@close="isOpenModal = false"-->
+<!--		>-->
+<!--			<template #body>-->
+<!--				<LocationDetail-->
+<!--					v-if="locationDetailData"-->
+<!--					:location-data="locationDetailData"-->
+<!--				/>-->
+<!--			</template>-->
+<!--		</Modal>-->
 	</div>
 </template>
 
@@ -45,18 +58,22 @@ import { scrollTopAnimate } from '@libs/uiUtils';
 // components
 import HeroBanner from '@components/HeroBanner';
 import LocationBlock from '@components/LocationBlock';
+import LocationDetail from '@components/LocationDetail';
 import LocationList from '@components/LocationList';
 import LocationListItem from '@components/LocationListItem';
 import MapInfo from '@components/MapInfo';
+import Modal from '@components/Modal';
 import RouteMap from '@components/RouteMap';
 
 export default {
 	components: {
 		HeroBanner,
 		LocationBlock,
+		LocationDetail,
 		LocationList,
 		LocationListItem,
 		MapInfo,
+		Modal,
 		RouteMap,
 	},
 	props: {
@@ -64,6 +81,12 @@ export default {
 			type: String,
 			required: true,
 		},
+	},
+	data() {
+		return {
+			isOpenModal: false,
+			locationDetailData: null,
+		};
 	},
 	computed: {
 		mapData() {
@@ -76,6 +99,10 @@ export default {
 		},
 		onClickLocation(index) {
 			scrollTopAnimate(this.$refs.locationBlock[index].$el.offsetTop, 1000);
+		},
+		onClickMore(index) {
+			this.isOpenModal = true;
+			this.locationDetailData = this.mapData.locations[index];
 		},
 	},
 };

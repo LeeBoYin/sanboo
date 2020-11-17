@@ -1,0 +1,125 @@
+//@import "variables";
+$transition-duration-modal: .3s;
+
+.modal {
+	z-index: $zindex-modal;
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	position: fixed;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	visibility: hidden;
+	transition: visibility 0s $transition-duration-modal;
+
+	@include media-breakpoint-down(md) {
+		align-items: flex-end;
+	}
+
+	&__content {
+		display: flex;
+		flex-direction: column;
+		background-color: #FFFFFF;
+		transition-property: opacity, transform;
+		transition-duration: $transition-duration-modal;
+		transform: scale(0.95);
+		opacity: 0;
+		max-height: calc(100% - 2 * #{ $header-height });
+		will-change: transform, opacity;
+		margin-top: $header-height;
+		//overflow: hidden;
+		@include media-breakpoint-down(md) {
+			width: 100%;
+			transform: translateY(100%);
+			opacity: 1;
+			max-height: calc(100% - #{ $header-height });
+			margin-top: 0;
+			&:after {
+				content: '';
+				position: absolute;
+				top: 100%;
+				left: 0;
+				width: 100%;
+				height: 500px;
+				background-color: #FFFFFF;
+			}
+		}
+	}
+	&__header {
+		position: relative;
+		flex: 0 0 $header-height;
+		padding: 0 $header-height;
+		display: flex;
+		align-items: center;
+	}
+	&__title {
+		font-weight: bold;
+		position: relative;
+		font-size: 1.8rem;
+		overflow: hidden;
+		white-space: nowrap;
+		text-overflow: ellipsis;
+		margin: 0 35px;
+		flex: 1 1 auto;
+		text-align: center;
+	}
+	&__close {
+		color: #666666;
+		position: absolute;
+		top: 0;
+		right: 0;
+		height: $header-height;
+		width: $header-height;
+		line-height: $header-height;
+		text-align: center;
+		font-size: 2rem;
+	}
+
+	&__body {
+		flex: 1 1 auto;
+		overflow: auto;
+	}
+	&__footer {
+		flex: 0 0 auto;
+		border-top: 1px solid #EEE;
+	}
+	&__header, &__footer {
+		transition: box-shadow .1s;
+		&--shadow {
+			box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+		}
+	}
+	&__overlay {
+		position: absolute;
+		left: 0;
+		top: 0;
+		width:100%;
+		height:100%;
+		opacity: 0;
+		background-color: rgba(0,0,0,0.6);
+		transition: opacity $transition-duration-modal;
+		z-index: -1;
+	}
+	&--open {
+		visibility: visible;
+		transition: visibility 0s;
+	}
+	&--open &__content {
+		transform: scale(1) translateY(0);
+		opacity: 1;
+	}
+	&--open &__overlay {
+		opacity: 1;
+	}
+}
+
+.modal-content-fade {
+	&-enter-active, &-leave-active {
+		// change router view after modal transition
+		transition-duration: $transition-duration-modal;
+	}
+	&-enter, &-leave-to {
+	}
+}
