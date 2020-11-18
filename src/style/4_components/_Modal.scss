@@ -75,12 +75,13 @@ $transition-duration-modal: .3s;
 		top: 0;
 		right: 0;
 		font-size: 1rem;
-		z-index: 1;
+		z-index: 1000;
 	}
 
 	&__body {
 		flex: 1 1 auto;
 		overflow: auto;
+		width: 100vw;
 	}
 	&__footer {
 		flex: 0 0 auto;

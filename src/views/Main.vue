@@ -50,13 +50,44 @@
 				/>
 			</template>
 		</Modal>
+		<Modal
+			:is-open="isOpenMenuModal"
+			@close="isOpenMenuModal = false"
+		>
+			<template #body>
+				<RouteMap
+					ref="routeMap"
+					:map-data="mapData"
+					@click:location="onClickLocation"
+				/>
+				<div class="container pt-3 pb-5">
+					<LocationList>
+						<LocationListItem
+							v-for="(locationData, index) in mapData.locations"
+							:key="index"
+							:index="index + 1"
+							:location-data="locationData"
+							@click.native="onClickLocation(index)"
+						/>
+					</LocationList>
+				</div>
+			</template>
+		</Modal>
+		<FabButton
+			v-if="isShowMenuButton"
+			class="btn btn-primary"
+			@click.native="isOpenMenuModal = true"
+		>
+			<img src="/static/icon/menu.svg">
+		</FabButton>
 	</div>
 </template>
 
 <script>
 import mapsData from '@/data/maps';
-import { scrollTopAnimate } from '@libs/uiUtils';
+import { scrollTopAnimate, throttleByAnimationFrame } from '@libs/uiUtils';
 // components
+import FabButton from '@components/FabButton';
 import HeroBanner from '@components/HeroBanner';
 import LocationBlock from '@components/LocationBlock';
 import LocationDetail from '@components/LocationDetail';
@@ -68,6 +99,7 @@ import RouteMap from '@components/RouteMap';
 
 export default {
 	components: {
+		FabButton,
 		HeroBanner,
 		LocationBlock,
 		LocationDetail,
@@ -86,6 +118,8 @@ export default {
 	data() {
 		return {
 			isOpenModal: false,
+			isOpenMenuModal: false,
+			isShowMenuButton: false,
 			locationDetailData: null,
 			locationDetailIndex: null,
 		};
@@ -95,11 +129,19 @@ export default {
 			return mapsData[this.id];
 		},
 	},
+	mounted() {
+		window.addEventListener('scroll', throttleByAnimationFrame(this.checkIsShowMenuButton));
+		window.addEventListener('resize', throttleByAnimationFrame(this.checkIsShowMenuButton));
+	},
 	methods: {
+		checkIsShowMenuButton() {
+			this.isShowMenuButton = window.scrollY > this.$refs.locationBlock[0].$el.offsetTop;
+		},
 		onClickStart() {
 			scrollTopAnimate(this.$refs.startPoint.offsetTop, 1000);
 		},
 		onClickLocation(index) {
+			this.isOpenMenuModal = false;
 			scrollTopAnimate(this.$refs.locationBlock[index].$el.offsetTop, 1000);
 		},
 		onClickMore(index) {

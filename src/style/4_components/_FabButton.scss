@@ -1,0 +1,26 @@
+.fab-button {
+	@include size(50px);
+	@include center-content;
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+	border-radius: 50%;
+	box-shadow: $box-shadow-sm;
+	z-index: 100;
+	animation-name: fade-in;
+	animation-fill-mode: both;
+	animation-duration: .5s;
+	animation-iteration-count: 1;
+	img {
+		width: 24px;
+	}
+}
+
+@keyframes fade-in {
+	from {
+		opacity: 0;
+	}
+	to {
+		opacity: 1;
+	}
+}
