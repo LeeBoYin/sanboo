@@ -6,6 +6,14 @@
 		<p>
 			{{mapData.description }}
 		</p>
+		<div v-if="mapData.links.length" class="mt-5">
+			<h4>相關連結</h4>
+			<ul>
+				<li v-for="(link, index) in mapData.links">
+					<a :href="link.url" target="_blank" rel="noopener">{{ link.name }}</a>
+				</li>
+			</ul>
+		</div>
 	</div>
 </template>
 

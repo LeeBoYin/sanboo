@@ -1,7 +1,7 @@
 .carousel {
 	position: relative;
 	&__list {
-		@include size(100%);
+		@include size(100%, 75vh);
 		@include hide-scrollbar;
 		@include scroll-snap-horizontal;
 		background-color: $gray-300;

@@ -1,10 +1,10 @@
 <template>
 	<div :class="{ 'modal--open': isOpen }" class="modal">
 		<div ref="modalContent" class="modal__content">
+			<a class="modal__close" @click="isOpen && $emit('close')">×</a>
 			<!-- header -->
-			<div class="modal__header" :class="{ 'modal__header--shadow': !isScrollTop }">
-				<a class="modal__close" @click="isOpen && $emit('close')">×</a>
-				<div v-if="title" class="modal__title">
+			<div v-if="title" class="modal__header" :class="{ 'modal__header--shadow': !isScrollTop }">
+				<div class="modal__title">
 					{{ title }}
 				</div>
 			</div>

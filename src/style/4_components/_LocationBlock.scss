@@ -1,7 +1,7 @@
 .location-block {
 	border-top: 4px solid $secondary;
 	&__carousel {
-		@include size(100%, 75vh);
+		//@include size(100%, 75vh);
 		.carousel__indicator {
 			bottom: 90px;
 		}

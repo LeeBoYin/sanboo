@@ -38,17 +38,18 @@
 			@click:more="onClickMore(index)"
 		/>
 		<hr>
-<!--		<Modal-->
-<!--			:is-open="isOpenModal"-->
-<!--			@close="isOpenModal = false"-->
-<!--		>-->
-<!--			<template #body>-->
-<!--				<LocationDetail-->
-<!--					v-if="locationDetailData"-->
-<!--					:location-data="locationDetailData"-->
-<!--				/>-->
-<!--			</template>-->
-<!--		</Modal>-->
+		<Modal
+			:is-open="isOpenModal"
+			@close="isOpenModal = false"
+		>
+			<template #body>
+				<LocationDetail
+					v-if="locationDetailData"
+					:location-data="locationDetailData"
+					:index="locationDetailIndex + 1"
+				/>
+			</template>
+		</Modal>
 	</div>
 </template>
 
@@ -86,6 +87,7 @@ export default {
 		return {
 			isOpenModal: false,
 			locationDetailData: null,
+			locationDetailIndex: null,
 		};
 	},
 	computed: {
@@ -102,6 +104,7 @@ export default {
 		},
 		onClickMore(index) {
 			this.isOpenModal = true;
+			this.locationDetailIndex = index;
 			this.locationDetailData = this.mapData.locations[index];
 		},
 	},
