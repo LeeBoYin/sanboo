@@ -5,9 +5,7 @@
 				v-for="(image, index) in images"
 				:key="index"
 				class="carousel__item"
-				:style="{
-				'background-image': `url(${ image })`
-			}"
+				v-lazy:background-image="image"
 			></div>
 		</div>
 		<div class="carousel__indicator">

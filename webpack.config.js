@@ -7,9 +7,33 @@ console.log(process.env.NODE_ENV);
 module.exports = {
 	entry: './src/main.js',
 	output: {
-		filename: 'main.[hash].js',
+		filename: '[name].[hash].js',
 		path: path.resolve(__dirname, 'dist'),
 		publicPath: '/',
+	},
+	optimization: {
+		splitChunks: {
+			chunks: 'all',
+			minSize: Infinity, // 避免產生 cacheGroups 定義以外的檔案
+			maxSize: 0,
+			cacheGroups: {
+				// 必要的第三方套件，需在 layout 引入
+				coreVendors: {
+					test: /[\\/]node_modules[\\/](leaflet|vue|vue-lazyload|vue2-leaflet)([\\/]|$)/,
+					name: 'coreVendors',
+					priority: 10,
+					reuseExistingChunk: true,
+					enforce: true,
+				},
+				vendors: {
+					test: /[\\/]node_modules[\\/]/,
+					name: 'vendors',
+					priority: 1,
+					reuseExistingChunk: true,
+					enforce: true,
+				},
+			},
+		},
 	},
 	resolve: {
 		alias: {

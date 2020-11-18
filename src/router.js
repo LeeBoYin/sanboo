@@ -7,7 +7,7 @@ const router =  new VueRouter({
 			path: '/',
 			alias: '/home',
 			name: 'Home',
-			component: () => import(/* webpackChunkName: 'Home' */ '@views/Home'),
+			component: () => import(/* webpackChunkName: 'home' */ '@views/Home'),
 			meta: {
 				title: 'Home - Sanboo',
 			},
@@ -15,7 +15,7 @@ const router =  new VueRouter({
 		{
 			path: '/:id',
 			name: 'Main',
-			component: () => import(/* webpackChunkName: 'Main' */ '@views/Main'),
+			component: () => import(/* webpackChunkName: 'sanboo' */ '@views/Main'),
 			props: true,
 			meta: {
 				title: 'Main - Sanboo',
