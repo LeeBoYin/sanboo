@@ -1,10 +1,10 @@
 %location-index {
 	position: relative;
+	transform: translate(0); // new z-index layer
 	display: inline-block;
 	min-width: 2em;
 	text-align: center;
 	padding: map_get($spacers, 1);
-	margin-right: map_get($spacers, 1);
 	&:before {
 		@include size(25px, 25px);
 		@include absolute-full-size;

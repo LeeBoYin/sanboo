@@ -7,14 +7,19 @@
 		@include size(100px, 80px);
 		@include background-image-cover;
 		flex: 0 0 auto;
-		margin-right: map_get($spacers, 2);
+		margin-right: map_get($spacers, 3);
 	}
 	&__title {
 		flex: 1 1 auto;
 		font-size: $font-size-base;
 		text-align: center;
-		padding: map_get($spacers, 3);
 		color: $primary-dark;
 		font-family: $font-family-base;
+	}
+	&__arrow {
+		flex: 0 0 auto;
+		width: 24px;
+		margin-left: map_get($spacers, 2);
+		margin-right: map_get($spacers, 2);
 	}
 }

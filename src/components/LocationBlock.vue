@@ -7,7 +7,9 @@
 		<div class="container">
 			<div class="location-block__content">
 				<div v-if="index" class="location-block__index">
-					{{ index }}
+					<div class="location-block__index-num">
+						{{ index }}
+					</div>
 				</div>
 				<h2>{{ locationData.title }}</h2>
 				<Subtitle>{{ locationData.subtitle }}</Subtitle>

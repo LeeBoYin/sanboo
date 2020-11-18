@@ -4,7 +4,15 @@
 			v-if="index"
 			class="location-list-item__index"
 		>{{ index }}</span>
-		{{ locationData.title }}
+		<span
+			class="location-list-item__title"
+		>
+			{{ locationData.title }}
+		</span>
+		<img
+			class="location-list-item__arrow"
+			src="/static/icon/arrow-right-primary-dark.svg"
+		>
 	</li>
 </template>
 

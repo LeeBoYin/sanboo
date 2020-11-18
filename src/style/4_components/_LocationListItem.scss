@@ -3,24 +3,22 @@
 	cursor: pointer;
 	border-bottom: 1px solid $gray-200;
 	padding: map_get($spacers, 3) 0;
+	display: flex;
+	align-items: center;
 	&__index {
 		@extend %location-index;
-		//position: relative;
-		//display: inline-block;
-		//font-size: $font-size-sm;
-		//min-width: 28px;
-		//text-align: center;
-		//padding: map_get($spacers, 1);
-		//margin-right: map_get($spacers, 1);
+		flex: 0 0 auto;
+		margin-right: map_get($spacers, 3);
 		&:before {
-			//@include size(25px, 25px);
-			//@include absolute-full-size;
-			//z-index: -1;
-			//content: '';
-			//display: block;
-			//transform: skewX(-10deg);
 			background-color: $primary-light;
 		}
+	}
+	&__title {
+		flex: 1 1 auto;
+	}
+	&__arrow {
+		flex: 0 0 auto;
+		width: 24px;
 	}
 
 }

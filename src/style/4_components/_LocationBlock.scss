@@ -14,12 +14,15 @@
 		box-shadow: $box-shadow-lg;
 	}
 	&__index {
-		@include center-content;
-		@include size(40px);
 		position: absolute;
 		top: -8px;
-		left: -8px;
-		background-color: $primary-light;
+		left: -5px;
+	}
+	&__index-num {
+		@extend %location-index;
+		&:before {
+			background-color: $primary-light;
+		}
 	}
 	&__cta-arrow {
 		height: 1.5rem;

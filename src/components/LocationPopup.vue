@@ -10,6 +10,10 @@
 		<div class="location-popup__title">
 			{{ locationData.title }}
 		</div>
+		<img
+			class="location-popup__arrow"
+			src="/static/icon/arrow-right-primary-dark.svg"
+		>
 	</div>
 </template>
 
