@@ -4,7 +4,7 @@
 			:image-url="mapData.banner"
 			@start="onClickStart"
 		>
-			<img :src="mapData.logo">
+			<img :src="mapData.logo" alt="logo">
 		</HeroBanner>
 		<div ref="startPoint"></div>
 		<div class="container py-5">
@@ -37,7 +37,9 @@
 			:location-data="locationData"
 			@click:more="onClickMore(index)"
 		/>
-		<hr>
+		<div class="text-center text-xs text-muted p-3">
+			Made with ❤️ by BY & PZ
+		</div>
 		<Modal
 			:is-open="isOpenModal"
 			@close="isOpenModal = false"

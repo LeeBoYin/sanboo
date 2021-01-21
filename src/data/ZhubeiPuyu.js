@@ -1,6 +1,6 @@
 function importAll(r) {
 	let images = {};
-	r.keys().map((item, index) => {
+	r.keys().map(item => {
 		images[item.replace('./', '')] = r(item).default;
 	});
 	return images;
@@ -8,21 +8,31 @@ function importAll(r) {
 
 const images = importAll(require.context('@assets/image/ZhubeiPuyu', true, /\.(png|jpe?g|svg)$/));
 
+function getImagesAt(path) {
+	const pathImages = [];
+	for (const [key, value] of Object.entries(images)) {
+		if(key.indexOf(path + '/') !== -1) {
+			pathImages.push(value);
+		}
+	}
+	return pathImages;
+}
+
 export default {
 	title: '竹北璞玉田散步地圖',
 	banner: images['banner.jpg'],
 	logo: images['logo.svg'],
 	subtitle: 'Vestibulum congue purus in nisi accumsan, nec semper neque iaculis. Ut blandit justo eu suscipit volutpat.',
-	description: 'Quisque sed gravida leo. In laoreet metus id molestie eleifend. Proin suscipit commodo dolor et pharetra. Proin augue eros, tincidunt eu turpis non, iaculis venenatis leo. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Duis ipsum magna, eleifend in urna vitae, scelerisque consectetur leo. Vivamus eleifend at purus non suscipit.',
+	description: `來，漫步吧。<br><br>距離新竹高鐵5分鐘車程，用不同的速度與這裡的人事物相遇， 邀請你自東海一街進入璞玉田，跟著散步地圖展開一場獨旅。在快快的社會步調中慢慢生活，在漫漫旅行中認識這裡。<br><br>來，散步吧。<br><br>看看山、看看水、看看農作物，還有各種人事物與大自然共生的可能性。<br><br>看看這片土壤滋養著萬物，也同時滋育著各種靈魂。`,
 	coordinate: {
-		lat: 24.808731,
-		lng: 121.050298,
+		lat: 24.811,
+		lng: 121.053,
 	},
-	zoom: 15,
+	zoom: 14,
 	links: [
 		{
 			name: 'Google Maps 竹北璞玉散步地圖',
-			url: 'https://www.google.com/maps/d/edit?mid=1T8GAuIWFLgS_5owZF5jkB4mbbYUT1fs7&usp=sharing',
+			url: 'https://www.google.com/maps/d/viewer?mid=1T8GAuIWFLgS_5owZF5jkB4mbbYUT1fs7&usp=sharing',
 		},
 	],
 	locations: [
@@ -36,14 +46,8 @@ export default {
 				lng: 121.0486212,
 			},
 			tags: ['東海秘徑', '散步小路'],
-			images: [
-				images['東海秘徑/IMG_20200919_154840.jpg'],
-				images['東海秘徑/IMG_20200919_155226.jpg'],
-				images['東海秘徑/IMG_20200919_155437.jpg'],
-			],
-			links: [
-
-			],
+			images: getImagesAt('東海秘徑'),
+			links: [],
 		},
 		{
 			title: '福靖宮',
@@ -55,12 +59,7 @@ export default {
 				lng: 121.047125,
 			},
 			tags: ['民間信仰', '伯公', '客家文化'],
-			images: [
-				images['福靖宮/「DSC_0015.jpg」的副本.jpg'],
-				images['福靖宮/「DSC_0018.jpg」的副本.jpg'],
-				images['福靖宮/「DSC_0023.jpg」的副本.jpg'],
-				images['福靖宮/「DSC_0031.jpg」的副本.jpg'],
-			],
+			images: getImagesAt('福靖宮'),
 			links: [
 
 			],
@@ -75,11 +74,7 @@ export default {
 				lng: 121.048034,
 			},
 			tags: ['冠軍米', '氣候變遷解方'],
-			images: [
-				images['舊港圳/DSC_0039.jpg'],
-				images['舊港圳/DSC_0066.jpg'],
-				images['舊港圳/IMG_20200912_161326.jpg'],
-			],
+			images: getImagesAt('舊港圳'),
 			links: [
 
 			],
@@ -94,14 +89,7 @@ export default {
 				lng: 121.052342,
 			},
 			tags: ['大霸尖山', '攝影'],
-			images: [
-				images['眺望點/IMG_1183.jpg'],
-				images['眺望點/IMG_3088.jpg'],
-				images['眺望點/IMG_5387.jpg'],
-				images['眺望點/IMG_5551.jpg'],
-				images['眺望點/IMG_9527.jpg'],
-				images['眺望點/陳益樞DSC05858.jpg'],
-			],
+			images: getImagesAt('眺望點'),
 			links: [
 
 			],
@@ -116,14 +104,7 @@ export default {
 				lng: 121.054578,
 			},
 			tags: ['簡餐', '咖啡', '親子', '友善食材', '貓山王榴槤', '甘蔗檸檬汁', '無菜單料理'],
-			images: [
-				images['樂樂長/20201012_094704.jpg'],
-				images['樂樂長/DSC_0210.jpg'],
-				images['樂樂長/DSC_0212.jpg'],
-				images['樂樂長/FB_IMG_1595939535260.jpg'],
-				images['樂樂長/IMG20201106122416[1].jpg'],
-				images['樂樂長/IMG20201106141057[1].jpg'],
-			],
+			images: getImagesAt('樂樂長'),
 			links: [
 				{
 					name: '樂樂長咖啡臉書粉專',
@@ -141,19 +122,7 @@ export default {
 				lng: 121.05578,
 			},
 			tags: ['當季飲食', '在地消費', 'CSA(社區協力農業)', '友善耕作，新竹自然農俱樂部'],
-			images: [
-				images['璞玉自然農場/DSC_1135.jpg'],
-				images['璞玉自然農場/DSC_2578.jpg'],
-				images['璞玉自然農場/DSC_2589.jpg'],
-				images['璞玉自然農場/DSC_3032.jpg'],
-				images['璞玉自然農場/DSC_8679.jpg'],
-				images['璞玉自然農場/IMG_20200920_142447.jpg'],
-				images['璞玉自然農場/received_1812563608763011.jpg'],
-				images['璞玉自然農場/received_2041334252545903.jpg'],
-				images['璞玉自然農場/received_10156528351091940.jpg'],
-				images['璞玉自然農場/received_10209763320679293.jpg'],
-				images['璞玉自然農場/received_10216813233463586.jpg'],
-			],
+			images: getImagesAt('璞玉自然農場'),
 			links: [
 				{
 					name: '璞玉自然農場臉書社團',
@@ -171,10 +140,7 @@ export default {
 				lng: 121.05612,
 			},
 			tags: ['東海米'],
-			images: [
-				images['東海碾米廠/DSC_0313.jpg'],
-				images['東海碾米廠/P_20201115_164002.jpg'],
-			],
+			images: getImagesAt('東海碾米場'),
 			links: [
 
 			],
@@ -189,11 +155,7 @@ export default {
 				lng: 121.055193,
 			},
 			tags: ['當季飲食', '在地消費', '友善耕作', '新瓦屋13好市集'],
-			images: [
-				images['田爸爸冠軍米/1605366859839.jpg'],
-				images['田爸爸冠軍米/1605366911971.jpg'],
-				images['田爸爸冠軍米/IMG20200813181442.jpg'],
-			],
+			images: getImagesAt('田爸爸冠軍米'),
 			links: [
 				{
 					name: '冠軍米訂購表單 ',
@@ -211,18 +173,7 @@ export default {
 				lng: 121.047508,
 			},
 			tags: ['絹印', 'DIY', '親子活動', '在地創生', '青年創業'],
-			images: [
-				images['玩印/2020-08-29 20.49.29.jpg'],
-				images['玩印/65654652_2549425261757731_6195862255762931712_n.jpg'],
-				images['玩印/IMG20200818142514.jpg'],
-				images['玩印/IMG20200818142914.jpg'],
-				images['玩印/IMG20200818155717.jpg'],
-				images['玩印/S__53149802.jpg'],
-				images['玩印/環境照_190726_0002.jpg'],
-				images['玩印/環境照_190726_0005.jpg'],
-				images['玩印/環境照_190726_0006.jpg'],
-				images['玩印/環境照_190726_0007.jpg'],
-			],
+			images: getImagesAt('玩印'),
 			links: [
 				{
 					name: '玩印工作室官方網站',
@@ -235,44 +186,38 @@ export default {
 			],
 		},
 		{
-			title: 'Studio Smoll',
-			subtitle: '',
-			description: '',
-			content: '',
+			title: '尼普頓馬術',
+			subtitle: '專業馬術訓練',
+			description: '噠噠的馬蹄聲，歸人與過客的交會之處',
+			content: `你可能曾在東海聽過噠噠的馬蹄聲，看著大小騎士巡（ㄌㄧㄢˋ）田（ㄑㄧˊ），他們來自坐落在舊港圳一旁的尼普頓，在此培訓英式馬術騎士參與大小馬術賽事。<br><br>除了寒假暑假有給小騎士的營隊，平日還能在此辦理小型聚會，尼普頓也積極的跟在地店家結合活動，這樣的在地特色受許多親子家庭喜愛。`,
 			coordinate: {
-				lat: 24.816385,
-				lng: 121.04709,
+				lat: 24.806258,
+				lng: 121.051333,
 			},
-			tags: [],
-			images: [],
+			tags: ['馬術中心', '馬術比賽', '營隊'],
+			images: getImagesAt('尼普頓馬術'),
 			links: [
 				{
-					name: 'Studio Smoll臉書粉專',
-					url: 'https://www.facebook.com/studiosmoll/',
+					name: '尼普頓馬術臉書粉專',
+					url: 'https://www.facebook.com/%E5%B0%BC%E6%99%AE%E9%A0%93%E9%A6%AC%E8%A1%93%E5%89%B5%E8%97%9D%E5%9C%92%E5%8D%80-Neptune-Equestrian-107673807671247/',
 				},
 			],
 		},
 		{
-			title: '東海水壟間',
-			subtitle: '蟄伏民間的水利古蹟',
-			description: '以水力發動的碾米的水礱間，是先人順應自然的生活智慧結晶。',
-			content: `水礱，就是客家話「用水碾米」之意。水礱間，就是水力帶動的碾米機械裝置。談到機械裝置，你可能第一個聯想到的是「金屬」、「冰冷」或「需要電力」。但是，新竹縣竹北市東海里藏著一棟鄭家水礱間，自1929年落成後，幾經改良，引舊港圳之水，利用高低落差灌注到渦輪系統，轉水運行、牽引木製機械裝置。<br><br>只打開水圳閘門，引水入礱間，鄭家人可以不耗一度電力，日碾兩百包(約一萬公斤)的米，轉動六七十載不曾停歇。水礱間裡頭還設計引流圳水進來後濾出魚蟹的空間，過去長時間成為鄭家生活的補貼，八七水災時，聽鄭先生說一天之內捕捉到500斤毛蟹。不過近年來因為水源汙染問題，往日常見的鰻魚、毛蟹都已不見蹤影。<br><br>自高鐵特區成立，稻田變建地，水礱間變得無用武之地，便靜靜蜷伏在東海窟，慢慢的被時代埋沒。<br><br>若有機會走到東海二街95號，不妨找找這座隱藏在三合院民宅之中的先民智慧吧！`,
+			title: '小吉地瓜鋪',
+			subtitle: '地瓜專賣店',
+			description: '基本款香甜烤地瓜、恰到好處酥脆地瓜條，或是創意包餡地瓜球，這裡通通有！',
+			content: `位在東興路上、斜對角就是生醫園區，有著一家好吃的地瓜店，由宋爸宋媽還有 Amber 共同經營，提供大新竹地區餐飲業新鮮好吃的各種地瓜。<br><br>原本就在對面園區上班 Amber ，回家共同經營後，與媽媽研發各種好吃的創意手作地瓜料理，更直接與外送服務合作，讓產品更加多元又好訂購，真的是竹北地區地瓜愛好者的福音啊！<br><br>年輕的 Amber 分享回家的原因之一：過去幫忙洗刷、挑選地瓜工作繁重、與父親發生摩擦，直到年紀稍長才懂的父親所說的：「地瓜養大了你們」，突然理解地瓜對家裡的重要性還有情感，它不僅養大了 Amber 與姐妹，還有一個充滿愛的家。<br><br>共同打拼的夥伴呢～還有家裡養的松鼠小吉（故店名為小吉地瓜），還有貓、狗、鴨（多多），熱鬧極了！有空來走走探訪美食，也認識這溫馨的一家子！`,
 			coordinate: {
-				lat: 24.804555,
-				lng: 121.052691,
+				lat: 24.804019,
+				lng: 121.050417,
 			},
-			tags: ['復興碾米廠', '水力渦輪發電', '綠色能源', '水利古蹟', '客家文化'],
-			images: [
-				images['水礱間/2020.07.18轉動吧水礱間_201112.jpg'],
-				images['水礱間/2020_0.07.18轉動吧水礱間_201112.jpg'],
-				images['水礱間/92397510_228143085213608_477239152270639104_n.jpg'],
-				images['水礱間/P_20200724_083858.jpg'],
-				images['水礱間/水礱間皮帶.jpg'],
-			],
+			tags: ['地瓜', '外送', '美食'],
+			images: getImagesAt('小吉地瓜'),
 			links: [
 				{
-					name: '大南埔農村工作室',
-					url: 'http://tainanbu.blogspot.com/2013/11/1111.html',
+					name: '小吉地瓜鋪臉書粉專',
+					url: 'https://www.facebook.com/chichisweeet/',
 				},
 			],
 		},
@@ -286,16 +231,7 @@ export default {
 				lng: 121.048602,
 			},
 			tags: ['簡餐', '咖啡', '友善食材', '在地創生', '青年創業'],
-			images: [
-				images['有田/20201108_彭聖嚴_0085.jpg'],
-				images['有田/IMG20201107150745[1].jpg'],
-				images['有田/IMG20201107151104[1].jpg'],
-				images['有田/IMG20201107152017[1].jpg'],
-				images['有田/IMG20201107152323[1].jpg'],
-				images['有田/IMG20201107152850[1].jpg'],
-				images['有田/IMG_20201023_135129.jpg'],
-				images['有田/P_20201115_164633.jpg'],
-			],
+			images: getImagesAt('有田'),
 			links: [
 				{
 					name: '有田咖啡臉書粉專',
@@ -313,11 +249,7 @@ export default {
 				lng: 121.0494973,
 			},
 			tags: ['砌石工法', '生態工法'],
-			images: [
-				images['駁坎/DSC_0060.jpg'],
-				images['駁坎/「DSC_0055.jpg」的副本.jpg'],
-				images['駁坎/石駁坎_PhotoCredit_Hsinchih.jpg'],
-			],
+			images: getImagesAt('駁坎'),
 			links: [
 				{
 					name: '鹿寮坑的砌石駁坎',
@@ -339,11 +271,7 @@ export default {
 				lng: 121.0557425,
 			},
 			tags: ['文山步道', '通學步道'],
-			images: [
-				images['犁頭山/1.jpg'],
-				images['犁頭山/DJI_0029.jpg'],
-				images['犁頭山/IMG_0326.jpg'],
-			],
+			images: getImagesAt('犁頭山'),
 			links: [
 				{
 					name: '犁頭山登山網站',
@@ -357,14 +285,11 @@ export default {
 			description: '不用排隊的美景、人稱「新竹金城武樹」就在竹22縣道上。',
 			content: `池上有棵金城武樹，竹北東海里往芎林的竹二二線道上也有一棵龍眼樹酷似金城武廣告中的樹！<br><br>其實，行經各鄉村農田小路放慢腳步，你很容易就可以找到屬於當地的金城武樹，那是因為農家通常會在田邊種棵遮陽的樹，耕作後休息乘涼用。山景、稻浪、老樹交疊的風景，在農村隨處可及，只要開始踏入鄉村，美景因人而被看見。<br><br>願你找到你心目中那棵金城武樹，不用再大老遠去追逐美景。`,
 			coordinate: {
-				lat: 24.810467,
-				lng: 121.048034,
+				lat: 24.806369,
+				lng: 121.061331,
 			},
 			tags: ['芎林金城武樹', '新竹金城武樹'],
-			images: [
-				images['竹二二金城武樹/P_20201115_162207.jpg'],
-				images['竹二二金城武樹/林裕治106141822_3229476447097106_7096154990894104010_o.jpg'],
-			],
+			images: getImagesAt('竹二二金城武樹'),
 			links: [
 				{
 					name: '探訪新竹的田野金城武',

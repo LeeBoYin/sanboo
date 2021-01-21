@@ -1,7 +1,7 @@
 <template>
 	<div class="location-popup">
 		<div
-			v-if="locationData.images.length"
+			v-if="locationData.images && locationData.images.length"
 			:style="{
 				'background-image': `url(${ locationData.images[0] })`
 			}"
