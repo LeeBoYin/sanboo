@@ -8,7 +8,19 @@
 			:options="mapOptions"
 			@ready="onMapReady()"
 		>
-			<LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+			<LTileLayer url="https://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png " />
+			<LMarker
+				v-if="userCoordinate"
+				:key="`${ userCoordinate.lat },${ userCoordinate.lng }`"
+				:lat-lng="userCoordinate"
+			>
+				<LIcon
+					:icon-size="[18, 18]"
+					:icon-anchor="[9, 9]"
+				>
+					<CurrentLocationMarker />
+				</LIcon>
+			</LMarker>
 			<LMarker
 				v-for="(locationData, index) in mapData.locations"
 				:key="index"
@@ -37,10 +49,25 @@
 				</LPopup>
 			</LMarker>
 		</LMap>
+		<button
+			v-if="isShowBackButton"
+			class="route-map__back-btn btn btn bg-white text-primary-dark"
+			@click="backToInitialPosition"
+		>
+			返回初始位置
+		</button>
+		<button
+			v-if="isShowUserLocationButton"
+			class="route-map__navigate-btn btn btn-lg btn-primary-dark"
+			@click="goToUserLocation"
+		>
+			<img src="/static/icon/navigate.svg">
+		</button>
 	</div>
 </template>
 
 <script>
+import { getCurrentCoordinate } from '@libs/geolocation';
 import {
 	LIcon,
 	LMap,
@@ -51,6 +78,7 @@ import {
 } from 'vue2-leaflet';
 import LocationPopup from '@components/LocationPopup';
 import MapMarker from '@components/MapMarker';
+import CurrentLocationMarker from '@components/CurrentLocationMarker';
 export default {
 	components: {
 		LIcon,
@@ -61,6 +89,7 @@ export default {
 		LTooltip,
 		LocationPopup,
 		MapMarker,
+		CurrentLocationMarker,
 	},
 	props: {
 		mapData: {
@@ -75,6 +104,11 @@ export default {
 				dragging: !L.Browser.mobile,
 				scrollWheelZoom: false,
 			},
+			userCoordinate: null,
+			isFetchingUserCoordinate: false,
+			isShowUserLocationButton: true,
+			isShowBackButton: false,
+			geoLocationPermission: null,
 		};
 	},
 	mounted() {
@@ -86,6 +120,7 @@ export default {
 	methods: {
 		onMapReady() {
 			this.mapObject = this.$refs.map.mapObject;
+			this.bindMapEvents();
 			window.mapObject = this.mapObject;
 		},
 		onMapTouch(e) {
@@ -97,6 +132,43 @@ export default {
 		},
 		onClickLocation(index) {
 			this.$emit('click:location', index);
+		},
+		bindMapEvents() {
+			this.mapObject.on('moveend', () => {
+				this.isShowBackButton = true;
+				this.isShowUserLocationButton = true;
+			});
+		},
+		backToInitialPosition() {
+			this.mapObject.once('moveend', () => {
+				this.isShowBackButton = false;
+			});
+			this.mapObject.setView(this.mapData.coordinate, this.mapData.zoom);
+		},
+		async goToUserLocation() {
+			if(this.isFetchingUserCoordinate) {
+				return;
+			}
+			await this.fetchUserCoordinate();
+			if(!this.userCoordinate) {
+				return;
+			}
+			this.mapObject.once('moveend', () => {
+				this.isShowUserLocationButton = false;
+			});
+			this.mapObject.setView(this.userCoordinate);
+		},
+		async fetchUserCoordinate() {
+			this.isFetchingUserCoordinate = true;
+			const currentCoordinate = await getCurrentCoordinate();
+			this.userCoordinate = {
+				lat: currentCoordinate.latitude,
+				lng: currentCoordinate.longitude,
+			};
+			this.isFetchingUserCoordinate = false;
+			if(!this.userCoordinate) {
+				this.geoLocationPermission = 'denied';
+			}
 		},
 	},
 };

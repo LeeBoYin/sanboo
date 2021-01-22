@@ -106,6 +106,7 @@ module.exports = {
 		hot: true,
 		host: '0.0.0.0',
 		port: 8000,
+		http2: true,
 		historyApiFallback: true, // for vue router mode history
 	},
 	plugins: [
