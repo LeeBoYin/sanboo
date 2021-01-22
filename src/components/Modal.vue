@@ -142,7 +142,10 @@ export default {
 		},
 		onOpen() {
 			this.setBodyScroll();
-			this.$nextTick(this.detectModalBodyScroll);
+			this.$nextTick(() => {
+				this.$refs.modalBody.scrollTop = 0;
+				this.detectModalBodyScroll();
+			});
 		},
 		removeEventHandlers() {
 			window.removeEventListener('orientationchange', this.detectModalBodyScroll);

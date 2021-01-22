@@ -16,7 +16,7 @@
 		<RouteMap
 			ref="routeMap"
 			:map-data="mapData"
-			@click:location="onClickLocation"
+			@click:location="showLocationDetail"
 		/>
 		<div class="container pt-3 pb-5">
 			<LocationList>
@@ -25,7 +25,7 @@
 					:key="index"
 					:index="index + 1"
 					:location-data="locationData"
-					@click.native="onClickLocation(index)"
+					@click.native="showLocationDetail(index)"
 				/>
 			</LocationList>
 		</div>
@@ -35,7 +35,7 @@
 			:key="index"
 			:index="index + 1"
 			:location-data="locationData"
-			@click:more="onClickMore(index)"
+			@click:more="showLocationDetail(index)"
 		/>
 		<div class="text-center text-xs text-muted p-3">
 			Made with ❤️ by BY & PZ
@@ -47,38 +47,16 @@
 			<template #body>
 				<LocationDetail
 					v-if="locationDetailData"
+					:key="locationDetailIndex"
 					:location-data="locationDetailData"
 					:index="locationDetailIndex + 1"
 				/>
 			</template>
 		</Modal>
-		<Modal
-			:is-open="isOpenMenuModal"
-			@close="isOpenMenuModal = false"
-		>
-			<template #body>
-				<RouteMap
-					ref="routeMap"
-					:map-data="mapData"
-					@click:location="onClickLocation"
-				/>
-				<div class="container pt-3 pb-5">
-					<LocationList>
-						<LocationListItem
-							v-for="(locationData, index) in mapData.locations"
-							:key="index"
-							:index="index + 1"
-							:location-data="locationData"
-							@click.native="onClickLocation(index)"
-						/>
-					</LocationList>
-				</div>
-			</template>
-		</Modal>
 		<FabButton
 			v-if="isShowMenuButton"
 			class="btn btn-primary"
-			@click.native="isOpenMenuModal = true"
+			@click.native="onClickShowMenu"
 		>
 			<img src="/static/icon/menu.svg">
 		</FabButton>
@@ -120,7 +98,6 @@ export default {
 	data() {
 		return {
 			isOpenModal: false,
-			isOpenMenuModal: false,
 			isShowMenuButton: false,
 			locationDetailData: null,
 			locationDetailIndex: null,
@@ -142,14 +119,13 @@ export default {
 		onClickStart() {
 			scrollTopAnimate(this.$refs.startPoint.offsetTop, 1000);
 		},
-		onClickLocation(index) {
-			this.isOpenMenuModal = false;
-			scrollTopAnimate(this.$refs.locationBlock[index].$el.offsetTop, 1000);
-		},
-		onClickMore(index) {
+		showLocationDetail(index) {
 			this.isOpenModal = true;
 			this.locationDetailIndex = index;
 			this.locationDetailData = this.mapData.locations[index];
+		},
+		onClickShowMenu() {
+			scrollTopAnimate(this.$refs.routeMap.$el.offsetTop, 1500);
 		},
 	},
 };
