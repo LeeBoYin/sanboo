@@ -71,6 +71,7 @@ $header-height: 0px;
 		@include size(2em);
 		@include center-content;
 		color: #666666;
+		cursor: pointer;
 		background-color: rgba(255, 255, 255, 0.8);
 		box-shadow: $box-shadow-sm;
 		position: absolute;

@@ -8,7 +8,7 @@
 			:options="mapOptions"
 			@ready="onMapReady()"
 		>
-			<LTileLayer url="https://b.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png " />
+			<LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 			<LMarker
 				v-if="userCoordinate"
 				:key="`${ userCoordinate.lat },${ userCoordinate.lng }`"
@@ -53,12 +53,13 @@
 			v-if="isShowBackButton"
 			class="route-map__back-btn btn btn bg-white text-primary-dark"
 			@click="backToInitialPosition"
-		>
-			返回初始位置
-		</button>
+		>返回初始位置</button>
 		<button
-			v-if="isShowUserLocationButton"
+			v-if="geoLocationPermission !== 'denied' && isShowUserLocationButton"
 			class="route-map__navigate-btn btn btn-lg btn-primary-dark"
+			:class="{
+				'route-map__navigate-btn--loading': isFetchingUserCoordinate,
+			}"
 			@click="goToUserLocation"
 		>
 			<img src="/static/icon/navigate.svg">
@@ -67,7 +68,7 @@
 </template>
 
 <script>
-import { getCurrentCoordinate } from '@libs/geolocation';
+import { getCurrentCoordinate, checkGeolocationPermission } from '@libs/geolocation';
 import {
 	LIcon,
 	LMap,
@@ -118,10 +119,15 @@ export default {
 		this.$el.removeEventListener('touchmove', this.onMapTouch);
 	},
 	methods: {
-		onMapReady() {
+		async onMapReady() {
 			this.mapObject = this.$refs.map.mapObject;
 			this.bindMapEvents();
 			window.mapObject = this.mapObject;
+
+			this.geoLocationPermission = await checkGeolocationPermission();
+			if(this.geoLocationPermission === 'granted') {
+				this.fetchUserCoordinate();
+			}
 		},
 		onMapTouch(e) {
 			if(e.touches.length > 1) {
@@ -161,14 +167,15 @@ export default {
 		async fetchUserCoordinate() {
 			this.isFetchingUserCoordinate = true;
 			const currentCoordinate = await getCurrentCoordinate();
+			this.isFetchingUserCoordinate = false;
+			if(!currentCoordinate) {
+				this.geoLocationPermission = 'denied';
+				return;
+			}
 			this.userCoordinate = {
 				lat: currentCoordinate.latitude,
 				lng: currentCoordinate.longitude,
 			};
-			this.isFetchingUserCoordinate = false;
-			if(!this.userCoordinate) {
-				this.geoLocationPermission = 'denied';
-			}
 		},
 	},
 };

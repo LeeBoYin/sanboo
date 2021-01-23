@@ -12,3 +12,13 @@ export async function getCurrentCoordinate() {
 	}
 	return null;
 }
+
+export async function checkGeolocationPermission() {
+	if(!navigator.permissions) {
+		return 'unknown';
+	}
+	const result = await navigator.permissions.query({
+		name: 'geolocation',
+	});
+	return result.state;
+}
