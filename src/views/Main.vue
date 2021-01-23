@@ -38,7 +38,7 @@
 			@click:more="showLocationDetail(index)"
 		/>
 		<div class="text-center text-xs text-muted p-3">
-			Made with ❤️ by BY & PZ
+			Made with ❤️ by <a href="https://leeboy.in" target="_blank">BY</a> & <a href="https://www.peizhen-lin.com" target="_blank">PZ</a>
 		</div>
 		<Modal
 			:is-open="isOpenModal"
