@@ -11,7 +11,7 @@
 			<LTileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
 			<LMarker
 				v-if="userCoordinate"
-				:key="`${ userCoordinate.lat },${ userCoordinate.lng }`"
+				ref="currentLocationMarker"
 				:lat-lng="userCoordinate"
 			>
 				<LIcon
@@ -68,7 +68,7 @@
 </template>
 
 <script>
-import { getCurrentCoordinate, checkGeolocationPermission } from '@libs/geolocation';
+import { getCurrentCoordinate, checkGeolocationPermission, watchCurrentCoordinate } from '@libs/geolocation';
 import {
 	LIcon,
 	LMap,
@@ -110,7 +110,32 @@ export default {
 			isShowUserLocationButton: true,
 			isShowBackButton: false,
 			geoLocationPermission: null,
+			watchPositionId: null,
 		};
+	},
+	watch: {
+		userCoordinate(newVal, oldVal) {
+			// set initial coordinate
+			if(newVal && !oldVal) {
+				this.watchPositionId = watchCurrentCoordinate((currentCoordinate) => {
+					this.userCoordinate = {
+						lat: currentCoordinate.latitude,
+						lng: currentCoordinate.longitude,
+					};
+				});
+			}
+			// update new coordinate
+			if(newVal && oldVal) {
+				this.$refs.currentLocationMarker.mapObject.setLatLng(this.userCoordinate);
+				// follow user location
+				if(!this.isShowUserLocationButton) {
+					this.mapObject.once('moveend', () => {
+						this.isShowUserLocationButton = false;
+					});
+					this.mapObject.setView(this.userCoordinate, this.mapObject.getZoom());
+				}
+			}
+		},
 	},
 	mounted() {
 		this.$el.addEventListener('touchmove', this.onMapTouch);
@@ -155,10 +180,13 @@ export default {
 			if(this.isFetchingUserCoordinate) {
 				return;
 			}
-			await this.fetchUserCoordinate();
+			if(!this.userCoordinate) {
+				await this.fetchUserCoordinate();
+			}
 			if(!this.userCoordinate) {
 				return;
 			}
+			// hide UserLocationButton on map move end
 			this.mapObject.once('moveend', () => {
 				this.isShowUserLocationButton = false;
 			});

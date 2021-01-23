@@ -13,6 +13,22 @@ export async function getCurrentCoordinate() {
 	return null;
 }
 
+export function watchCurrentCoordinate(success, fail) {
+	if(navigator.geolocation) {
+		return navigator.geolocation.watchPosition((position) => {
+			if(position) {
+				success && success({
+					latitude: position.coords.latitude,
+					longitude: position.coords.longitude,
+				});
+			}
+		}, (err) => {
+			fail && fail(err);
+		});
+	}
+	return null;
+}
+
 export async function checkGeolocationPermission() {
 	if(!navigator.permissions) {
 		return 'unknown';
