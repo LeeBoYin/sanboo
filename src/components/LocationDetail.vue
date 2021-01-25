@@ -7,9 +7,9 @@
 		/>
 		<div class="container">
 			<div class="location-detail__content">
-				<div v-if="index" class="location-detail__index">
+				<div class="location-detail__index">
 					<div class="location-detail__index-num">
-						{{ index }}
+						{{ index + 1 }}
 					</div>
 				</div>
 				<h3>{{ locationData.title }}</h3>
@@ -17,19 +17,19 @@
 				<p v-html="locationData.content" class="mt-3"></p>
 				<div v-if="locationData.tags.length">
 					<Tag
-						v-for="(tag, index) in locationData.tags"
-						:key="index"
+						v-for="(tag, tagIndex) in locationData.tags"
+						:key="tagIndex"
 					>{{ tag }}</Tag>
 				</div>
 				<div v-if="locationData.links.length" class="mt-5">
 					<h4>相關連結</h4>
 					<ul>
-						<li v-for="(link, index) in locationData.links">
+						<li v-for="(link, linkIndex) in locationData.links">
 							<a
 								:href="link.url"
 								target="_blank"
 								rel="noopener"
-								@click="onClickLink(index)"
+								@click="onClickLink(linkIndex)"
 							>
 								{{ link.name }}
 							</a>
@@ -55,7 +55,7 @@ export default {
 	props: {
 		index: {
 			type: Number,
-			default: null,
+			required: true,
 		},
 		locationData: {
 			type: Object,
@@ -63,17 +63,19 @@ export default {
 		},
 	},
 	methods: {
-		onClickLink(index) {
+		onClickLink(linkIndex) {
 			logEvent('click_location_link', {
 				location_name: this.locationData.title,
-				link_index: index,
-				link_name: this.locationData.links[index].name,
+				location_sn: this.index + 1,
+				link_index: linkIndex,
+				link_name: this.locationData.links[linkIndex].name,
 			});
 		},
-		onCarouselIndexChange(index) {
+		onCarouselIndexChange(imageIndex) {
 			logEvent('carousel_image_view', {
 				location_name: this.locationData.title,
-				image_sn: index + 1,
+				location_sn: this.index + 1,
+				image_sn: imageIndex + 1,
 				image_total: this.locationData.images.length,
 				position: 'detail',
 			});

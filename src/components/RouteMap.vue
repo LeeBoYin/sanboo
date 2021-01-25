@@ -172,8 +172,8 @@ export default {
 		},
 		onClickLocation(index) {
 			logEvent('click_map_popup', {
-				location_index: index,
 				location_name: this.mapData.locations[index].title,
+				location_sn: index + 1,
 			});
 			this.$emit('click:location', index);
 		},

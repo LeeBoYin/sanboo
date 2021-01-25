@@ -47,7 +47,7 @@
 					v-if="locationDetailData"
 					:key="locationDetailIndex"
 					:location-data="locationDetailData"
-					:index="locationDetailIndex + 1"
+					:index="locationDetailIndex"
 				/>
 			</template>
 		</Modal>
@@ -128,8 +128,8 @@ export default {
 		},
 		onClickListItem(index) {
 			logEvent('click_list_item', {
-				location_index: index,
 				location_name: this.mapData.locations[index].title,
+				location_sn: index + 1,
 			});
 			this.showLocationDetail(index);
 		},
@@ -138,8 +138,8 @@ export default {
 			this.locationDetailIndex = index;
 			this.locationDetailData = this.mapData.locations[index];
 			logEvent('location_detail_view', {
-				location_index: this.locationDetailIndex,
 				location_name: this.locationDetailData.title,
+				location_sn: this.locationDetailIndex + 1,
 			});
 		},
 		onClickShowMenu() {

@@ -73,9 +73,9 @@ export default {
 						this.intersectionTimeout = setTimeout(() => {
 							logEvent('location_block_view', {
 								location_name: this.locationData.title,
-								location_index: this.index,
+								location_sn: this.index + 1,
 							});
-						}, 1500);
+						}, 1000);
 					} else {
 						clearTimeout(this.intersectionTimeout);
 						this.intersectionTimeout = null;
@@ -98,13 +98,15 @@ export default {
 		onClickMoreButton() {
 			logEvent('click_detail_button', {
 				location_name: this.locationData.title,
+				location_sn: this.index + 1,
 			});
 			this.$emit('click:more');
 		},
-		onCarouselIndexChange(index) {
+		onCarouselIndexChange(imageIndex) {
 			logEvent('carousel_image_view', {
 				location_name: this.locationData.title,
-				image_sn: index + 1,
+				location_sn: this.index + 1,
+				image_sn: imageIndex + 1,
 				image_total: this.locationData.images.length,
 				position: 'block',
 			});
