@@ -23,17 +23,28 @@ export default {
 	banner: images['banner.jpg'],
 	logo: images['logo.svg'],
 	subtitle: 'Vestibulum congue purus in nisi accumsan, nec semper neque iaculis. Ut blandit justo eu suscipit volutpat.',
-	description: `來，漫步吧。<br><br>距離新竹高鐵5分鐘車程，用不同的速度與這裡的人事物相遇， 邀請你自東海一街進入璞玉田，跟著散步地圖展開一場獨旅。在快快的社會步調中慢慢生活，在漫漫旅行中認識這裡。<br><br>來，散步吧。<br><br>看看山、看看水、看看農作物，還有各種人事物與大自然共生的可能性。<br><br>看看這片土壤滋養著萬物，也同時滋育著各種靈魂。`,
+	description: `
+		by <a href="https://www.facebook.com/%E7%AB%B9%E5%8C%97%E6%9C%89%E7%94%B0-107228950684433" target="_blank" rel="noopener" ">竹北有田團隊</a>
+		<br><br><br>
+		來，漫步吧。
+		<br><br>
+		距離新竹高鐵5分鐘車程，用不同的速度與這裡的人事物相遇， 邀請你自東海一街進入璞玉田，跟著散步地圖展開一場獨旅。在快快的社會步調中慢慢生活，在漫漫旅行中認識這裡。
+		<br><br>
+		來，散步吧。
+		<br><br>
+		看看山、看看水、看看農作物，還有各種人事物與大自然共生的可能性。
+		<br><br>
+		看看這片土壤滋養著萬物，也同時滋育著各種靈魂。`,
 	coordinate: {
 		lat: 24.811,
 		lng: 121.053,
 	},
 	zoom: 14,
 	links: [
-		{
-			name: 'Google Maps 竹北璞玉散步地圖',
-			url: 'https://www.google.com/maps/d/viewer?mid=1T8GAuIWFLgS_5owZF5jkB4mbbYUT1fs7&usp=sharing',
-		},
+		// {
+		// 	name: 'Google Maps 竹北璞玉散步地圖',
+		// 	url: 'https://www.google.com/maps/d/viewer?mid=1T8GAuIWFLgS_5owZF5jkB4mbbYUT1fs7&usp=sharing',
+		// },
 	],
 	locations: [
 		{
