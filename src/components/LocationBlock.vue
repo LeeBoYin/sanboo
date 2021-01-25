@@ -62,6 +62,7 @@ export default {
 	data() {
 		return {
 			intersectionObserver: null,
+			intersectionTimeout: null,
 		};
 	},
 	mounted() {
@@ -69,10 +70,15 @@ export default {
 			this.intersectionObserver = new IntersectionObserver((entries) => {
 				entries.forEach(entry => {
 					if(entry.isIntersecting) {
-						logEvent('location_block_view', {
-							location_name: this.locationData.title,
-							location_index: this.index,
-						});
+						this.intersectionTimeout = setTimeout(() => {
+							logEvent('location_block_view', {
+								location_name: this.locationData.title,
+								location_index: this.index,
+							});
+						}, 1500);
+					} else {
+						clearTimeout(this.intersectionTimeout);
+						this.intersectionTimeout = null;
 					}
 				});
 			}, {
