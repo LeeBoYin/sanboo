@@ -23,9 +23,9 @@
 				<LocationListItem
 					v-for="(locationData, index) in mapData.locations"
 					:key="index"
-					:index="index + 1"
+					:index="index"
 					:location-data="locationData"
-					@click.native="showLocationDetail(index)"
+					@click.native="onClickListItem(index)"
 				/>
 			</LocationList>
 		</div>
@@ -33,13 +33,11 @@
 			ref="locationBlock"
 			v-for="(locationData, index) in mapData.locations"
 			:key="index"
-			:index="index + 1"
+			:index="index"
 			:location-data="locationData"
 			@click:more="showLocationDetail(index)"
 		/>
-		<div class="text-center text-xs text-muted p-3">
-			Made with ❤️ by <a href="https://leeboy.in" target="_blank">BY</a> & <a href="https://www.peizhen-lin.com" target="_blank">PZ</a>
-		</div>
+		<Footer />
 		<Modal
 			:is-open="isOpenModal"
 			@close="isOpenModal = false"
@@ -66,8 +64,11 @@
 <script>
 import mapsData from '@/data/maps';
 import { scrollTopAnimate, throttleByAnimationFrame } from '@libs/uiUtils';
+import { setMapId, logEvent } from '@libs/analytics';
+
 // components
 import FabButton from '@components/FabButton';
+import Footer from '@components/Footer';
 import HeroBanner from '@components/HeroBanner';
 import LocationBlock from '@components/LocationBlock';
 import LocationDetail from '@components/LocationDetail';
@@ -77,9 +78,11 @@ import MapInfo from '@components/MapInfo';
 import Modal from '@components/Modal';
 import RouteMap from '@components/RouteMap';
 
+
 export default {
 	components: {
 		FabButton,
+		Footer,
 		HeroBanner,
 		LocationBlock,
 		LocationDetail,
@@ -108,9 +111,13 @@ export default {
 			return mapsData[this.id];
 		},
 	},
+	created() {
+		setMapId(this.id);
+	},
 	mounted() {
 		window.addEventListener('scroll', throttleByAnimationFrame(this.checkIsShowMenuButton));
 		window.addEventListener('resize', throttleByAnimationFrame(this.checkIsShowMenuButton));
+		logEvent('main_load');
 	},
 	methods: {
 		checkIsShowMenuButton() {
@@ -119,12 +126,24 @@ export default {
 		onClickStart() {
 			scrollTopAnimate(this.$refs.startPoint.offsetTop, 1000);
 		},
+		onClickListItem(index) {
+			logEvent('click_list_item', {
+				location_index: index,
+				location_name: this.mapData.locations[index].title,
+			});
+			this.showLocationDetail(index);
+		},
 		showLocationDetail(index) {
 			this.isOpenModal = true;
 			this.locationDetailIndex = index;
 			this.locationDetailData = this.mapData.locations[index];
+			logEvent('location_detail_view', {
+				location_index: this.locationDetailIndex,
+				location_name: this.locationDetailData.title,
+			});
 		},
 		onClickShowMenu() {
+			logEvent('click_show_menu');
 			scrollTopAnimate(this.$refs.routeMap.$el.offsetTop, 1500);
 		},
 	},

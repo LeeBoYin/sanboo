@@ -13,8 +13,8 @@ import router from '@/router';
 import firebaseApp from 'firebase/app';
 import 'firebase/analytics';
 import firebaseConfig from '../firebase.config';
-firebaseApp.initializeApp(firebaseConfig);
-firebaseApp.analytics();
+export const project = firebaseApp.initializeApp(firebaseConfig);
+export const analytics = firebaseApp.analytics();
 
 import VueLazyload from 'vue-lazyload';
 

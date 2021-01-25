@@ -1,9 +1,8 @@
 <template>
 	<li class="location-list-item">
 		<span
-			v-if="index"
 			class="location-list-item__index"
-		>{{ index }}</span>
+		>{{ index + 1 }}</span>
 		<span
 			class="location-list-item__title"
 		>
@@ -21,7 +20,7 @@ export default {
 	props: {
 		index: {
 			type: Number,
-			default: null,
+			required: true,
 		},
 		locationData: {
 			type: Object,

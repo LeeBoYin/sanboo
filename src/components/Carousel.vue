@@ -31,6 +31,11 @@ export default {
 			currentIndex: 0,
 		};
 	},
+	watch: {
+		currentIndex() {
+			this.$emit('change:index', this.currentIndex);
+		},
+	},
 	mounted() {
 		this.$refs.list.addEventListener('scroll', this.onListScroll);
 	},

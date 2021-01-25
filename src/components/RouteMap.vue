@@ -69,6 +69,8 @@
 
 <script>
 import { getCurrentCoordinate, checkGeolocationPermission, watchCurrentCoordinate } from '@libs/geolocation';
+import { logEvent } from '@libs/analytics';
+import { analytics } from '@/main';
 import {
 	LIcon,
 	LMap,
@@ -115,6 +117,9 @@ export default {
 	},
 	watch: {
 		userCoordinate(newVal, oldVal) {
+			if(!newVal) {
+				return;
+			}
 			// set initial coordinate
 			if(newVal && !oldVal) {
 				this.watchPositionId = watchCurrentCoordinate((currentCoordinate) => {
@@ -135,6 +140,10 @@ export default {
 					this.mapObject.setView(this.userCoordinate, this.mapObject.getZoom());
 				}
 			}
+			analytics.setUserProperties({
+				coordinate_latitude: this.userCoordinate.latitude,
+				coordinate_longitude: this.userCoordinate.longitude,
+			})
 		},
 	},
 	mounted() {
@@ -162,6 +171,10 @@ export default {
 			}
 		},
 		onClickLocation(index) {
+			logEvent('click_map_popup', {
+				location_index: index,
+				location_name: this.mapData.locations[index].title,
+			});
 			this.$emit('click:location', index);
 		},
 		bindMapEvents() {
@@ -175,11 +188,13 @@ export default {
 				this.isShowBackButton = false;
 			});
 			this.mapObject.setView(this.mapData.coordinate, this.mapData.zoom);
+			logEvent('back_to_map_initial_position');
 		},
 		async goToUserLocation() {
 			if(this.isFetchingUserCoordinate) {
 				return;
 			}
+			logEvent('go_to_user_location');
 			if(!this.userCoordinate) {
 				await this.fetchUserCoordinate();
 			}
@@ -198,12 +213,14 @@ export default {
 			this.isFetchingUserCoordinate = false;
 			if(!currentCoordinate) {
 				this.geoLocationPermission = 'denied';
+				logEvent('fetch_user_coordinate_fail');
 				return;
 			}
 			this.userCoordinate = {
 				lat: currentCoordinate.latitude,
 				lng: currentCoordinate.longitude,
 			};
+			logEvent('fetch_user_coordinate_success');
 		},
 	},
 };
